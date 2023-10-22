@@ -324,7 +324,6 @@ class Announcements {
             throw new Error('VALIDATION_ERROR', 'enabled');
         
         $task = array(
-            ':time' => @$body['time'],
             ':path' => $body['path'],
             ':title' => $body['title'],
             ':excerpt' => $body['excerpt'],
@@ -333,7 +332,14 @@ class Announcements {
             ':enabled' => @$body['enabled'] ? 1 : 0,
         );
         
-        $sql = 'INSERT INTO announcements(
+        if(isset($body['time'])) {
+            $task[':time'] = $body['time'];
+            $sqlTime = 'TO_TIMESTAMP(:time)';
+        }
+        else
+            $sqlTime = 'DEFAULT';
+        
+        $sql = "INSERT INTO announcements(
                     time,
                     path,
                     title,
@@ -342,7 +348,7 @@ class Announcements {
                     body,
                     enabled
                 ) VALUES (
-                    :time,
+                    $sqlTime,
                     :path,
                     :title,
                     :excerpt,
@@ -350,7 +356,7 @@ class Announcements {
                     :body,
                     :enabled
                 )
-                RETURNING annoid';
+                RETURNING annoid";
         
         $q = $this -> pdo -> prepare($sql);
         $q -> execute($task);
