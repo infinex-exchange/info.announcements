@@ -138,22 +138,15 @@ class Announcements {
     }
     
     public function getAnnouncement($body) {
-        if(isset($body['annoid']) && isset($body['path']))
-            throw new Error('ARGUMENTS_CONFLICT', 'Both annoid and path are set');
-        else if(isset($body['annoid'])) {
-            if(!validateId($body['annoid']))
-                throw new Error('VALIDATION_ERROR', 'annoid');
-            $dispAnno = $body['annoid'];
-        }
-        else if(isset($body['path'])) {
-            if(!$this -> validatePath($body['path']))
-                throw new Error('VALIDATION_ERROR', 'path', 400);
-            $dispAnno = $body['path'];
-        }
-        else
-            throw new Error('MISSING_DATA', 'annoid or path', 400);
+        if(!isset($body['annoid']))
+            throw new Error('MISSING_DATA', 'annoid');
         
-        $task = [];
+        if(!validateId($body['annoid']))
+            throw new Error('VALIDATION_ERROR', 'annoid');
+        
+        $task = [
+            ':annoid' => $body['annoid']
+        ];
         
         $sql = 'SELECT annoid,
                        EXTRACT(epoch FROM time) AS time,
@@ -164,23 +157,14 @@ class Announcements {
                        body,
                        enabled
                 FROM announcements
-                WHERE 1=1';
-        
-        if(isset($body['annoid'])) {
-            $task[':annoid'] = $body['annoid'];
-            $sql .= ' AND annoid = :annoid';
-        }
-        else {
-            $task[':path'] = $body['path'];
-            $sql .= ' AND path = :path';
-        }
+                WHERE annoid = :annoid';
         
         $q = $this -> pdo -> prepare($sql);
         $q -> execute($task);
         $row = $q -> fetch();
         
         if(!$row)
-            throw new Error('NOT_FOUND', 'Announcement '.$dispAnno.' not found');
+            throw new Error('NOT_FOUND', 'Announcement '.$body['annoid'].' not found');
             
         return $this -> rtrAnnouncement($row);
     }

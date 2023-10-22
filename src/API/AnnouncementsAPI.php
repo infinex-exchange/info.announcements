@@ -15,7 +15,7 @@ class AnnouncementsAPI {
     
     public function initRoutes($rc) {
         $rc -> get('/', [$this, 'getAnnouncements']);
-        $rc -> get('/{path}', [$this, 'getAnnouncement']);
+        $rc -> get('/{annoid}', [$this, 'getAnnouncement']);
     }
     
     public function getAnnouncements($path, $query, $body, $auth) {
@@ -33,17 +33,18 @@ class AnnouncementsAPI {
     
     public function getAnnouncement($path, $query, $body, $auth) {
         $anno = $this -> anno -> getAnnouncement([
-            'path' => $path['path']
+            'annoid' => $path['annoid']
         ]);
         
         if(!$anno['enabled'])
-            throw new Error('FORBIDDEN', 'No permissions to announcement '.$path['path']);
+            throw new Error('FORBIDDEN', 'No permissions to announcement '.$path['annoid']);
         
         return $this -> ptpAnnouncement($anno, isset($query['full']));
     }
     
     private function ptpAnnouncement($record, $full) {
         $resp = [
+            'annoid' => $record['annoid'],
             'time' => $record['time'],
             'path' => $record['path'],
             'title' => $record['title'],
