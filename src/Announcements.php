@@ -137,7 +137,7 @@ class Announcements {
         }
             
         return [
-            'announcement' => $announcements,
+            'announcements' => $announcements,
             'more' => $pag -> more
         ];
     }
