@@ -378,7 +378,7 @@ class Announcements {
             'enabled' => $row['enabled']
         ];
         
-        if(array_key_exists($row['body']))
+        if(array_key_exists('body', $row))
             $resp['body'] = $row['body'];
         
         return $resp;
