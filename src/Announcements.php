@@ -164,7 +164,7 @@ class Announcements {
         $row = $q -> fetch();
         
         if(!$row)
-            throw new Error('NOT_FOUND', 'Announcement '.$body['annoid'].' not found');
+            throw new Error('NOT_FOUND', 'Announcement '.$body['annoid'].' not found', 404);
             
         return $this -> rtrAnnouncement($row);
     }
