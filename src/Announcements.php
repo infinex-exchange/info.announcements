@@ -142,7 +142,7 @@ class Announcements {
         ];
     }
     
-    public function getPopup($body) {
+    public function getAnnouncement($body) {
         if(isset($body['annoid']) && isset($body['path']))
             throw new Error('ARGUMENTS_CONFLICT', 'Both annoid and path are set');
         else if(isset($body['annoid'])) {
