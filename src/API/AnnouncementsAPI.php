@@ -48,7 +48,8 @@ class AnnouncementsAPI {
             'path' => $record['path'],
             'title' => $record['title'],
             'excerpt' => $record['excerpt'],
-            'featureImg' => $record['featureImg']
+            'featureImg' => $record['featureImg'],
+            'readMore' => $record['body'] !== null
         ];
         
         if($full)

@@ -86,8 +86,6 @@ class Announcements {
     public function getAnnouncements($body) {
         if(isset($body['enabled']) && !is_bool($body['enabled']))
             throw new Error('VALIDATION_ERROR', 'enabled');
-        if(isset($body['withBody']) && !is_bool($body['withBody']))
-            throw new Error('VALIDATION_ERROR', 'withBody');
             
         $pag = new Pagination\Offset(50, 500, $body);
         $search = new Search(
@@ -109,13 +107,10 @@ class Announcements {
                        title,
                        excerpt,
                        feature_img,
-                       enabled';
-        
-        if(@$body['withBody'])
-            $sql .= ', body';
-        
-        $sql .= ' FROM announcements
-                  WHERE 1=1';
+                       body,
+                       enabled
+                FROM announcements
+                WHERE 1=1';
         
         if(isset($body['enabled'])) {
             $task[':enabled'] = $body['enabled'] ? 1 : 0;
@@ -166,8 +161,8 @@ class Announcements {
                        title,
                        excerpt,
                        feature_img,
-                       enabled,
-                       body
+                       body,
+                       enabled
                 FROM announcements
                 WHERE 1=1';
         
@@ -368,20 +363,16 @@ class Announcements {
     }
     
     private function rtrAnnouncement($row) {
-        $resp = [
+        return [
             'annoid' => $row['annoid'],
             'time' => intval($row['time']),
             'path' => $row['path'],
             'title' => $row['title'],
             'excerpt' => $row['excerpt'],
             'featureImg' => $row['feature_img'],
+            'body' => $row['body'],
             'enabled' => $row['enabled']
         ];
-        
-        if(array_key_exists('body', $row))
-            $resp['body'] = $row['body'];
-        
-        return $resp;
     }
     
     private function validatePath($path) {
