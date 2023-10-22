@@ -49,7 +49,7 @@ class AnnouncementsAPI {
             'path' => $record['path'],
             'title' => $record['title'],
             'excerpt' => $record['excerpt'],
-            'featureImg' => $record['featureImg'],
+            'featuredImg' => $record['featureImg'],
             'readMore' => $record['body'] !== null
         ];
         

@@ -204,7 +204,7 @@ class Announcements {
             !isset($body['path']) &&
             !isset($body['title']) &&
             !isset($body['excerpt']) &&
-            !array_key_exists('featureImg', $body) &&
+            !array_key_exists('featuredImg', $body) &&
             !array_key_exists('body', $body) &&
             !isset($body['enabled'])
         )
@@ -218,8 +218,8 @@ class Announcements {
             throw new Error('VALIDATION_ERROR', 'title');
         if(isset($body['excerpt']) && !is_string($body['excerpt']))
             throw new Error('VALIDATION_ERROR', 'except');
-        if(isset($body['featureImg']) && (!is_string($body['featureImg']) || strlen($body['featureImg']) > 255))
-            throw new Error('VALIDATION_ERROR', 'featureImg');
+        if(isset($body['featuredImg']) && (!is_string($body['featuredImg']) || strlen($body['featuredImg']) > 255))
+            throw new Error('VALIDATION_ERROR', 'featuredImg');
         if(isset($body['body']) && !is_string($body['body']))
             throw new Error('VALIDATION_ERROR', 'body');
         if(isset($body['enabled']) && !is_bool($body['enabled']))
@@ -252,8 +252,8 @@ class Announcements {
             $sql .= ', excerpt = :excerpt';
         }
         
-        if(array_key_exists('featureImg', $body)) {
-            $task[':feature_img'] = $body['featureImg'];
+        if(array_key_exists('featuredImg', $body)) {
+            $task[':feature_img'] = $body['featuredImg'];
             $sql .= ', feature_img = :feature_img';
         }
         
@@ -295,8 +295,8 @@ class Announcements {
         
         if(isset($body['time']) && !is_int($body['time']))
             throw new Error('VALIDATION_ERROR', 'time');
-        if(isset($body['featureImg']) && (!is_string($body['featureImg']) || strlen($body['featureImg']) > 255))
-            throw new Error('VALIDATION_ERROR', 'featureImg');
+        if(isset($body['featuredImg']) && (!is_string($body['featuredImg']) || strlen($body['featuredImg']) > 255))
+            throw new Error('VALIDATION_ERROR', 'featuredImg');
         if(isset($body['body']) && !is_string($body['body']))
             throw new Error('VALIDATION_ERROR', 'body');
         if(isset($body['enabled']) && !is_bool($body['enabled']))
@@ -306,7 +306,7 @@ class Announcements {
             ':path' => $body['path'],
             ':title' => $body['title'],
             ':excerpt' => $body['excerpt'],
-            ':feature_img' => @$body['featureImg'],
+            ':feature_img' => @$body['featuredImg'],
             ':body' => @$body['body'],
             ':enabled' => @$body['enabled'] ? 1 : 0,
         );
@@ -353,7 +353,7 @@ class Announcements {
             'path' => $row['path'],
             'title' => $row['title'],
             'excerpt' => $row['excerpt'],
-            'featureImg' => $row['feature_img'],
+            'featuredImg' => $row['feature_img'],
             'body' => $row['body'],
             'enabled' => $row['enabled']
         ];
