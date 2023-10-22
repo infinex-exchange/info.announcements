@@ -139,10 +139,10 @@ class Announcements {
     
     public function getAnnouncement($body) {
         if(!isset($body['annoid']))
-            throw new Error('MISSING_DATA', 'annoid');
+            throw new Error('MISSING_DATA', 'annoid', 400);
         
         if(!validateId($body['annoid']))
-            throw new Error('VALIDATION_ERROR', 'annoid');
+            throw new Error('VALIDATION_ERROR', 'annoid', 400);
         
         $task = [
             ':annoid' => $body['annoid']
