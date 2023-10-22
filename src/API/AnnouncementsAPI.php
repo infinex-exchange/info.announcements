@@ -19,7 +19,7 @@ class AnnouncementsAPI {
     }
     
     public function getAnnouncements($path, $query, $body, $auth) {
-        $resp = $th -> anno -> getAnnouncements([
+        $resp = $this -> anno -> getAnnouncements([
             'enabled' => true,
             'offset' => @$query['offset'],
             'limit' => @$queryp['limit']
