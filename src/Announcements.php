@@ -379,7 +379,7 @@ class Announcements {
     }
     
     private function validatePath($path) {
-        return preg_match('/^[a-f0-9\-]{1,255}$/', $path);
+        return preg_match('/^[a-z0-9\-]{1,255}$/', $path);
     }
 }
 
