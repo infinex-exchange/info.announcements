@@ -37,7 +37,7 @@ class AnnouncementsAPI {
         ]);
         
         if(!$anno['enabled'])
-            throw new Error('FORBIDDEN', 'No permissions to announcement '.$path['annoid']);
+            throw new Error('FORBIDDEN', 'No permissions to announcement '.$path['annoid'], 403);
         
         return $this -> ptpAnnouncement($anno, isset($query['full']));
     }
